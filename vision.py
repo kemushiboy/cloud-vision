@@ -8,7 +8,7 @@ from requests import Request, Session
 # Cloud Vision APIで画像を分析
 # CAPTCHAの分析
 # CAPTCHA画像の読み込み
-bin_captcha = open('numbers.png', 'rb').read()
+bin_captcha = open('demo-image.jpg', 'rb').read()
         
 # base64でCAPTCHA画像をエンコード
 str_encode_file = base64.b64encode(bin_captcha)
@@ -32,7 +32,7 @@ str_json_data = {
                     },
                     'features': [
                                 {
-                                'type': "TEXT_DETECTION",
+                                'type': "SAFE_SEARCH_DETECTION",
                                 'maxResults': 10
                                 }
                                 ]
