@@ -79,15 +79,15 @@ while True:
         params = jsonData["responses"][0]["safeSearchAnnotation"]
         if params["adult"] == "VERY_LIKELY":
           print "out"
-          GPIO.outout(11, True)
+          GPIO.output(11, True)
         elif params["adult"] == "LIKELY":
           print "out"
-          GPIO.outout(11, True)
+          GPIO.output(11, True)
         elif params["adult"] == "POSSIBLE":
           print "seout"
-          GPIO.outout(11, True)
+          GPIO.output(11, True)
         else:
-          GPIO.outout(11, False)
+          GPIO.output(11, False)
 
 
 
