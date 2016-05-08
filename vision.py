@@ -2,12 +2,14 @@
 #coding:utf-8
 import base64
 import json
-
 import cv2
 import time
-
 from requests import Request, Session
 
+import RPi.GPIO as GPIO
+
+GPIO.setmode(GPIO.BOARD)
+GPIO.setup(11, GPIO.OUT)
 
 # Cloud Vision APIで画像を分析
 # CAPTCHAの分析
@@ -43,7 +45,7 @@ while True:
 
       buf = cv2.cv.EncodeImage(".jpeg",cv2.cv.fromarray(frame)).tostring()#frameをjpeg文字列に変換
       str_encode_file = base64.b64encode(buf)#jpeg文字列からバイナリに変換
-      
+
       # Cloud Vision APIの仕様に沿ってJSONのペイロードを定義。
       str_json_data = {
             'requests': [
@@ -77,10 +79,17 @@ while True:
         params = jsonData["responses"][0]["safeSearchAnnotation"]
         if params["adult"] == "VERY_LIKELY":
           print "out"
-        if params["adult"] == "LIKELY":
+          GPIO.outout(11, True)
+        elif params["adult"] == "LIKELY":
           print "out"
-        if params["adult"] == "POSSIBLE":
+          GPIO.outout(11, True)
+        elif params["adult"] == "POSSIBLE":
           print "seout"
+          GPIO.outout(11, True)
+        else:
+          GPIO.outout(11, False)
+
+
 
           #return obj_response.text
       else:
