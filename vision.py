@@ -8,8 +8,10 @@ from requests import Request, Session
 
 import RPi.GPIO as GPIO
 
+GPIO.setwarnings(False)
 GPIO.setmode(GPIO.BOARD)
 GPIO.setup(11, GPIO.OUT)
+GPIO.setup(12, GPIO.OUT)
 
 # Cloud Vision APIで画像を分析
 # CAPTCHAの分析
@@ -80,15 +82,18 @@ while True:
         if params["adult"] == "VERY_LIKELY":
           print "out"
           GPIO.output(11, True)
+          GPIO.output(12, True)
         elif params["adult"] == "LIKELY":
           print "out"
           GPIO.output(11, True)
+          GPIO.output(12, True)
         elif params["adult"] == "POSSIBLE":
           print "seout"
           GPIO.output(11, True)
+          GPIO.output(12, True)
         else:
           GPIO.output(11, False)
-
+          GPIO.output(12, False)
 
 
           #return obj_response.text
@@ -99,5 +104,7 @@ while True:
       #break
 
 capture.release()
-cv2.destroyAllWindows()#事後処理
+cv2.destroyAllWindows()
+GPIO.cleanup()#事後処理
+
 
